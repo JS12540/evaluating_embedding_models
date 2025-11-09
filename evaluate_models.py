@@ -15,12 +15,12 @@ load_dotenv()
 openai_client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 co = cohere.Client(os.getenv("COHERE_API_KEY"))
 
-CHUNKS_PATH = "data/chunks.json"
-GROUND_PATH = "data/structured_acme_ground_dataset.csv"
+CHUNKS_PATH = "data/acme_recursive_chunks_char.json"
+GROUND_PATH = "data/recursive_ground_dataset.csv"
 INDEX_PATHS = {
-    "openai": "embeddings/openai.index",
-    "cohere": "embeddings/cohere.index",
-    "open_source": "embeddings/open_source.index"
+    "openai": "recursive_embeddings/openai.index",
+    "cohere": "recursive_embeddings/cohere.index",
+    "open_source": "recursive_embeddings/open_source.index"
 }
 TOP_K = 5
 
@@ -136,8 +136,8 @@ df_questions = pd.DataFrame(all_question_records)
 print("\nCombined Evaluation Results:")
 print(df_models.to_string(index=False))
 
-df_models.to_csv("evaluation_results.csv", index=False)
-df_questions.to_csv("detailed_per_question_results.csv", index=False)
+df_models.to_csv("recursive_evaluation_results.csv", index=False)
+df_questions.to_csv("recursive_detailed_per_question_results.csv", index=False)
 
 print("\nResults saved:")
 print("  - evaluation_results.csv (summary per model)")

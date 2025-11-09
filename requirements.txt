@@ -9,3 +9,4 @@ tqdm==4.67.1
 pandas==2.3.3
 ragas==0.3.8
 datasets==4.4.1
+python-toon==0.1.3
