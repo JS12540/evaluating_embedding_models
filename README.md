@@ -44,6 +44,21 @@ python recursive_chunking.py
 
 - Results are stored in `data/`
 
+## Creating Embeddings
+
+After chunking, create embeddings for both chunking strategies using FAISS (CPU):
+```bash
+python create_embeddings.py
+```
+
+This script:
+- Generates embeddings for all three models (OpenAI, Cohere, Hugging Face)
+- Uses FAISS for efficient vector indexing and similarity search
+- Stores embeddings locally for both structured and recursive chunking strategies
+- Saves FAISS indices to disk for later retrieval and evaluation
+
+**Output:** FAISS index files stored locally
+
 ## Ground Truth Generation
 
 Ground truth chunks per query can be generated using:
@@ -128,6 +143,8 @@ Evaluations are done per question and aggregated for both chunking strategies.
 | cohere       | 0.70     | 0.80     | 0.60        | 0.40        | 0.8667 | 0.7370 | 0.7641 |
 | open_source  | 0.45     | 0.70     | 0.40        | 0.36        | 0.75   | 0.4938 | 0.6173 |
 
+**Best Model (Recursive):** Cohere (`embed-v4.0`) with highest MRR (0.8667) and nDCG@5 (0.7641)
+
 ### Structured Chunking Evaluation Results
 
 | model        | recall@3 | recall@5 | precision@3 | precision@5 | mrr    | ndcg@3 | ndcg@5 |
@@ -135,6 +152,25 @@ Evaluations are done per question and aggregated for both chunking strategies.
 | openai       | 0.7833   | 0.90     | 0.60        | 0.44        | 1.00   | 0.8757 | 0.9161 |
 | cohere       | 0.6833   | 0.75     | 0.5333      | 0.36        | 1.00   | 0.7983 | 0.8051 |
 | open_source  | 0.6833   | 0.75     | 0.5333      | 0.36        | 0.8667 | 0.7370 | 0.7438 |
+
+**Best Model (Structured):** OpenAI (`text-embedding-3-small`) with perfect MRR (1.00) and highest nDCG@5 (0.9161)
+
+### 🏆 Overall Best Configuration
+
+**Structured Chunking + OpenAI Embeddings**
+
+| Metric       | Score  |
+|--------------|--------|
+| recall@5     | 0.90   |
+| precision@3  | 0.60   |
+| MRR          | 1.00   |
+| nDCG@3       | 0.8757 |
+| nDCG@5       | 0.9161 |
+
+This combination achieves:
+- Perfect ranking (MRR = 1.00)
+- Highest recall@5 (90%)
+- Best overall retrieval quality (nDCG@5 = 0.9161)
 
 ## Summary
 
